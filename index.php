@@ -8,14 +8,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
      * When the form data (PDF files are submitted).
      */
 
+
     if (!empty($_FILES['pdfFiles']['name'])) {
 
         /**
          * Check if the files are not empty. Make sure in the frontend required=true
          * Still if a single file is sent here then it will be sent back without any processing
          */
-
-
 
         $upload_dir = "upload/";
 
@@ -39,6 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
 
+        $all_files_uploaded_sucessfully = true;
         $merged_output_filename = $upload_dir . "merged.pdf";
         $ghostscript_command = "gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=$merged_output_filename ";
 
@@ -48,32 +48,55 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
              * For each file in the file array, add the path to the command
              */
 
+
+            if (file_exists($file)) {
+                $all_files_uploaded_sucessfully &= true;
+            } else {
+                $all_files_uploaded_sucessfully &= false;
+            }
+
+
             $ghostscript_command .= "\"" . $file . "\" ";
         }
+
+
+
+        if ($all_files_uploaded_sucessfully) {
+            error_log("Uploaded files exists in 'uoload/' directory? YES");
+        } else {
+            error_log("Uploaded files exists in 'uoload/' directory? NO");
+            error_log("Close connection and abort...");
+        }
+
 
         /**
          * Finally execute the command to combine the files 
          */
 
-        shell_exec($ghostscript_command);
+        $execution_result = shell_exec($ghostscript_command);
 
-        /**
-         * When the command is executed sucessfully, we are ready to send the combined file to the user.
-         * These headers tells the client (use's browser) that the file is being sent as an pdf file attachment.
-         */
 
-        header('Content-Type: application/pdf');
-        header('Content-Disposition: attachment; filename="merged.pdf"');
+        if ($execution_result == null) {
+            /**
+             * When the command is executed sucessfully, we are ready to send the combined file to the user.
+             * These headers tells the client (use's browser) that the file is being sent as an pdf file attachment.
+             */
 
-        readfile($merged_output_filename);
+            header('Content-Type: application/pdf');
+            header('Content-Disposition: attachment; filename="merged.pdf"');
 
-        /**
-         * The cleanup for the next session. Make sure we delete the preciously used files in the upload/ directory.
-         */
+            readfile($merged_output_filename);
 
-        clean_upload_dir();
+            /**
+             * The cleanup for the next session. Make sure we delete the preciously used files in the upload/ directory.
+             */
 
-        exit();
+            clean_upload_dir();
+
+            exit();
+        } else {
+            error_log("Something went wrong when executing ghostscript command.");
+        }
     }
 }
 
@@ -86,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
     <title>PDF Merger</title>
 </head>
 
@@ -113,6 +136,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php include 'templates/footer.php'; ?>
 
 </body>
-<script src="/assets/javascript/main.js"></script>
+<script src="assets/javascript/main.js"></script>
 
 </html>

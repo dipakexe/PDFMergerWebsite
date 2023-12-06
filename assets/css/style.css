@@ -112,7 +112,6 @@ form {
 }
 
 label {
-
   padding: 1.5em;
   font-size: 1.4em;
   color: rgb(77, 77, 77);
@@ -139,7 +138,10 @@ label {
   align-items: center;
 }
 
- button {
+button {
+
+all: unset;
+
   padding: 0.4em;
   margin: 0.6em;
 
@@ -155,9 +157,15 @@ label {
   border-radius: 14px;
   border: none;
   outline: none;
-  box-shadow: 1px 1px 3px rgba(128, 128, 128, 0.514);
+  box-shadow: 1px 1px 3px rgba(145, 101, 101, 0.514);
 
 
+  transition: transform 300ms ease-in;
+  
+}
+
+button:active {
+  transform: scale(1.1, 1);
 }
 
 footer {

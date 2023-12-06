@@ -13,4 +13,5 @@ I needed a tool for merging the notes peovided by my teachers which was in PDF f
 
 ## TODO
 
-- There's an issue with the file size limit for php/apache server. This is causing failiure for larger PDF files.
+- Make Javascript more readable.
+- Change color theme

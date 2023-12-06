@@ -26,14 +26,14 @@ function updateSelectedFilesInfo(numFiles) {
 
 input_pdfs.onchange = (input_event) => {
   /**
-   * For now only 1 MB is allowed.
+   * For now only 100 MB is allowed for now.
    */
 
   const total_size_in_mb =
     [...input_event.target.files].reduce((acc, file) => acc + file.size, 0) /
     (1024 * 1024);
 
-  if (total_size_in_mb > 1) {
+  if (total_size_in_mb > 100) {
     input_pdfs.value = null;
     form.reset();
   } else {
