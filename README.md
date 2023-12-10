@@ -14,4 +14,5 @@ I needed a tool for merging the notes peovided by my teachers which was in PDF f
 ## TODO
 
 - Make Javascript more readable.
-- Change color theme
+  - Separate global variables
+  - Functions and callbacks
