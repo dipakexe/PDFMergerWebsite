@@ -1,18 +1,47 @@
-const form = window.document.querySelectorAll("form")[0];
-const file_selector = window.document.querySelectorAll(".file-selector")[0];
-const file_selector_button = window.document.querySelectorAll(
-  ".file-selector button"
-)[0];
-const input_pdfs = window.document.querySelectorAll("input[type=file]")[0];
-const submit_button = window.document.querySelectorAll(
-  "button[type=submit]"
-)[0];
+/**
+ * A common selector method
+ */
 
-const reset_button = window.document.querySelectorAll("button[type=reset]")[0];
+
+const $ = (selector) => window.document.querySelectorAll(selector);
+
+
+/**
+ * Form Handling
+ */
+
+
+/**
+ * Find and select required elements. Report if any form element is missing.
+ */
+
+const form = $("form")[0];
+const file_selector = $(".file-selector")[0];
+const file_selector_button = $(".file-selector button")[0];
+const input_pdfs = $("input[type=file]")[0];
+const submit_button = $("button[type=submit]")[0];
+
+if (
+  (
+    form == undefined ||
+    file_selector == undefined ||
+    file_selector_button == undefined ||
+    input_pdfs == undefined ||
+    submit_button == undefined
+  )
+) {
+  console.error("Some form elements are missing.");
+}
+
+/**
+ * Callback for handling click on file selector button. When this button is clicked then the input element gets triggered.
+ */
 
 file_selector.onclick = function () {
   input_pdfs.click();
 };
+
+
 
 function updateSelectedFilesInfo(numFiles) {
   if (numFiles > 0) {
@@ -25,20 +54,7 @@ function updateSelectedFilesInfo(numFiles) {
 }
 
 input_pdfs.onchange = (input_event) => {
-  /**
-   * For now only 100 MB is allowed for now.
-   */
-
-  const total_size_in_mb =
-    [...input_event.target.files].reduce((acc, file) => acc + file.size, 0) /
-    (1024 * 1024);
-
-  if (total_size_in_mb > 100) {
-    input_pdfs.value = null;
-    form.reset();
-  } else {
-    updateSelectedFilesInfo(input_event.target.files.length);
-  }
+  updateSelectedFilesInfo(input_event.target.files.length);
 };
 
 form.onsubmit = (form_event) => {
@@ -53,8 +69,8 @@ submit_button.onclick = async (submit_button_event) => {
   for (var i = 0; i < inputs.length; i++) {
     if (!inputs[i].value) {
       // files are not selected
-      alert("Not files are selected.")
-      
+      alert("Not files are selected.");
+
       form.reportValidity();
       return false;
     }
@@ -72,6 +88,7 @@ submit_button.onclick = async (submit_button_event) => {
 
   if (response.ok) {
     const blob = await response.blob();
+
     const url = window.URL.createObjectURL(blob);
 
     const a = document.createElement("a");
@@ -88,7 +105,17 @@ submit_button.onclick = async (submit_button_event) => {
   }
 };
 
-reset_button.onclick = () => {
-  form.reset();
-  window.location.reload();
-};
+/**
+ * Reset Button
+ */
+
+const reset_button = $("button[type=reset]")[0];
+
+if (reset_button) {
+  reset_button.onclick = () => {
+    form.reset();
+    window.location.reload();
+  };
+} else {
+  console.error("Reset button not found.");
+}

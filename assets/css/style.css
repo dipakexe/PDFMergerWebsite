@@ -1,3 +1,5 @@
+/* This is the one and only CSS stylesheet this project has */
+
 * {
   padding: 0;
   margin: 0;
@@ -5,17 +7,15 @@
 }
 
 body {
-  font-family: "Arial", sans-serif;
-  background: #1e1e1e;
-  color: #fff;
-
-  font-family: "Roboto", sans-serif;
-
   height: 100vh;
-}
 
-/* from https://cssgrid-generator.netlify.app/ */
-body {
+  font-family: "Arial", sans-serif;
+
+  color: #fff;
+  background: #1e1e1e;
+
+  /* GRID PROPERTIES OF BODY */
+
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 0.4fr 2fr 0.3fr;
@@ -23,44 +23,38 @@ body {
   grid-row-gap: 10px;
 }
 
-header {
-  grid-area: 1 / 1 / 2 / 2;
-}
-.container {
-  grid-area: 2 / 1 / 3 / 2;
-}
-footer {
-  grid-area: 3 / 1 / 4 / 2;
-}
-/* end */
+/* Header start */
 
 header {
+  /* Position of header in the grid */
+  grid-area: 1 / 1 / 2 / 2;
+
+  padding: 1em;
+
   text-align: center;
   margin: 1em 0px;
-  padding: 1em;
 
   font-family: sans-serif;
   color: antiquewhite;
-  background: #333;
+  background: #3333338f;
 
-  backdrop-filter: blur(2.1px);
-
+  /* Center all the childs of header (such as h1) */
   display: grid;
   place-items: center;
 }
 
 header h1 {
-  font-size: 2.8em;
+  font-size: xx-large;
   color: #61dafb;
 }
 
-div.container {
-  width: 100vw;
+/* End of header */
 
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+div.container {
+  grid-area: 2 / 1 / 3 / 2;
+
+  display: grid;
+  place-items: center;
 
   padding: 20px;
 }
@@ -80,24 +74,26 @@ section.pdf-selector {
   transition: background-color 0.3s ease-in-out;
 }
 
+/* End of Container */
+
+/* Form Elements */
+
 form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 0.1fr 0.5fr 0.1fr;
 
   padding: 20px 30px;
 }
 
 label {
-  display: inline-block;
+  grid-area: 1 / 1 / 2 / 2;
 
-  padding: 1.5em;
-  font-weight: 700;
-  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
-  font-size: 1.5em;
   color: #61dafb;
-  margin-bottom: 1em;
+  padding: 12px;
+  font-size: large;
+
+  margin-bottom: 20px;
 }
 
 .file-selector {
@@ -107,35 +103,32 @@ label {
 }
 
 .buttons {
-  margin-top: 1em;
+  width: 100%;
 
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+  margin-top: 20px;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 
 button {
-  all: unset;
+  border: none;
+  outline: none;
 
-  padding: 0.4em;
+  padding: 7px 12px;
   margin: 0.6em;
 
   cursor: pointer;
 
-  font-family: "Google Sans", Roboto, Arial, sans-serif;
-
-  font-size: 1em;
-  font-weight: 700;
+  font-size: small;
   text-align: center;
-
-  border: none;
-  outline: none;
 
   color: #000000;
   background-color: #61dafb;
-  border: none;
+
   border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0px 3px rgba(61, 61, 61, 0.464),
+    inset -1 -1px 3px rgba(64, 64, 64, 0.2);
 
   transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out,
     box-shadow 0.3s ease-in-out; /* smooth transition */
@@ -143,39 +136,37 @@ button {
 
 button:active {
   transform: scale(1.1, 1);
+  transition: transform 1s ease;
 }
 
 button:hover {
   box-shadow: 2px 2px 10px rgba(207, 207, 207, 0.2);
+  transform: scale(1.1, 1);
+  transition: transform 1s ease;
 }
 
 footer {
-  width: 100%;
+  grid-area: 3 / 1 / 4 / 2;
+
+  color: #fff;
   background-color: #333;
-  padding: 20px;
 
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  padding: 10px;
 
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  display: grid;
+  place-items: center;
 
   font-family: sans-serif;
   font-weight: 0;
-  color: #fff;
 }
 
 .footer-title {
-  font-size: 1em;
+  font-size: small;
   margin-bottom: 0.5em;
 }
 
 .footer-description {
-  font-size: 0.9em;
+  font-size: smaller;
   color: #fff;
 }
 

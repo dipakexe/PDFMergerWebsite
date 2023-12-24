@@ -4,6 +4,8 @@ include('includes/functions.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+
+
     /**
      * When the form data (PDF files are submitted).
      */
@@ -15,6 +17,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
          * Check if the files are not empty. Make sure in the frontend required=true
          * Still if a single file is sent here then it will be sent back without any processing
          */
+
+
+
 
         $upload_dir = "upload/";
 
@@ -97,6 +102,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             error_log("Something went wrong when executing ghostscript command.");
         }
+    } else {
+        error_log("Recived an empty request with no attached files.");
     }
 }
 
@@ -109,11 +116,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="assets/javascript/main.js" defer></script>
     <link rel="stylesheet" href="assets/css/style.css">
     <title>PDF Merger</title>
-
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
 
 
 </head>
@@ -128,8 +133,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <label for="pdfFiles">Select PDF Files to Merge</label>
                 <div class="file-selector">
                     <button>Upload PDFs</button>
-                    <input hidden required type="file" name="pdfFiles[]" id="pdfFiles" multiple accept=".pdf">
                 </div>
+                <input hidden required type="file" name="pdfFiles[]" id="pdfFiles" multiple accept=".pdf">
                 <div class="buttons">
                     <button type="submit">Merge PDFs</button>
                     <button type="reset">Reset</button>
@@ -141,6 +146,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php include 'templates/footer.php'; ?>
 
 </body>
-<script src="assets/javascript/main.js"></script>
 
 </html>
